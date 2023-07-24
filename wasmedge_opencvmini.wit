@@ -1,3 +1,12 @@
+type mat-key = u32
+
 imdecode: func(buf: list<u8>) -> u32
-imshow: func(window-name: string, mat-key: u32) -> unit
+imencode: func(buf: list<u8>, m: mat-key) -> unit
+imwrite: func(file-name: string, m: mat-key) -> unit
+
+imshow: func(window-name: string, m: mat-key) -> unit
 waitkey: func(delay: u32) -> unit
+
+blur: func(m: mat-key) -> mat-key
+normalize: func(m: mat-key) -> mat-key
+bilinear-sampling: func(m: mat-key, w: u32, h: u32) -> mat-key

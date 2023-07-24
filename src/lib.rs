@@ -1,14 +1,7 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+pub mod generated;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+pub fn imencode(buf: &[u8], m: u32) {
+    unsafe {
+        generated::imencode(buf.as_ptr(), buf.len(), m);
     }
 }
