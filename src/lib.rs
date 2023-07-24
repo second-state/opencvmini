@@ -1,7 +1,7 @@
 pub mod generated;
 
-pub fn imencode(buf: &[u8], m: u32) {
+pub fn imencode(m: u32, buf: &[u8]) {
     unsafe {
-        generated::imencode(buf.as_ptr(), buf.len(), m);
+        generated::imencode(m, buf.as_ptr(), buf.len());
     }
 }

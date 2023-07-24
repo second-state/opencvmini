@@ -1,7 +1,7 @@
 type mat-key = u32
 
-imdecode: func(buf: list<u8>) -> u32
-imencode: func(buf: list<u8>, m: mat-key) -> unit
+imdecode: func(buf: list<u8>) -> mat-key
+imencode: func(m: mat-key, buf: list<u8>) -> unit
 imwrite: func(file-name: string, m: mat-key) -> unit
 
 imshow: func(window-name: string, m: mat-key) -> unit
