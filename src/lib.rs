@@ -3,8 +3,18 @@ mod generated {
     include!(concat!(env!("OUT_DIR"), "/generated.rs"));
 }
 
-pub fn imencode(m: u32, buf: &[u8]) {
+/// # Example
+///
+/// ```rust
+/// use image_encoder::imencode;
+///
+/// fn main() {
+///   let buf = [0u8; 100];
+///   imencode(".jpg", 0, &buf);
+/// }
+/// ```
+pub fn imencode(ext: &str, m: u32, buf: &[u8]) {
     unsafe {
-        generated::imencode(m, buf.as_ptr(), buf.len());
+        generated::imencode(ext.as_ptr(), ext.len(), m, buf.as_ptr(), buf.len());
     }
 }
