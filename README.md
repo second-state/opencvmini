@@ -2,6 +2,20 @@
 
 Rust SDK for WasmEdge Plugin [OpenCVMini](https://github.com/WasmEdge/WasmEdge/tree/master/plugins/wasmedge_opencvmini)
 
+## Usage
+
+Add dependency into `Cargo.toml`
+
+```toml
+opencvmini = "*"
+```
+
+then you can use this crate
+
+```rust
+use opencvmini::*;
+```
+
 ## Dependencies
 
 [opencvmini](https://github.com/WasmEdge/WasmEdge/tree/master/plugins/wasmedge_opencvmini) is a wasmedge plugin, you might like to clone repository [WasmEdge](https://github.com/WasmEdge/WasmEdge), and run the following commands to install this plugin.
