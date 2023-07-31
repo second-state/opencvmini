@@ -42,6 +42,6 @@ pub fn normalize(m: MatKey) -> MatKey {
 pub fn bilinear_sampling(m: MatKey, w: u32, h: u32) -> MatKey {
     unsafe { generated::bilinear_sampling(m, w, h) }
 }
-pub fn rectangle(m: MatKey, top: u32, left: u32, bottom: u32, right: u32) -> MatKey {
+pub fn rectangle(m: MatKey, top: u32, left: u32, bottom: u32, right: u32) {
     unsafe { generated::rectangle(m, top, left, bottom, right) }
 }

@@ -33,15 +33,6 @@ fn main() {
     // Described in https://www.tensorflow.org/lite/examples/object_detection/overview#output_signature
     // 0 Locations: Multidimensional array of [N][4] floating point values between 0 and 1, the inner arrays representing bounding boxes in the form [top, left, bottom, right]
     let locations: Vec<f32> = session.get_output("TFLite_Detection_PostProcess");
-    for i in 0..locations.len() / 4 {
-        let h = i * 4;
-        let left = (300 as f32 * locations[h]) as u32;
-        let top = (300 as f32 * locations[h + 1]) as u32;
-        let right = (300 as f32 * locations[h + 2]) as u32;
-        let bottom = (300 as f32 * locations[h + 3]) as u32;
-        println!("{}: ({}, {}, {}, {})", i, left, top, right, bottom);
-        let img = rectangle(img, top, left, bottom, right);
-    }
     // 1 Classes: Array of N integers (output as floating point values) each indicating the index of a class label from the labels file
     let class_names: Vec<String> = fs::read_to_string("asset/labelmap.txt")
         .expect("failed to open labelmap")
@@ -49,18 +40,26 @@ fn main() {
         .map(|s| s.to_string())
         .collect();
     let classes: Vec<f32> = session.get_output("TFLite_Detection_PostProcess:1");
-    for f in classes {
-        println!("{}: class {}", f, class_names[f as usize]);
-    }
     // 2 Scores: Array of N floating point values between 0 and 1 representing probability that a class was detected
     let scores: Vec<f32> = session.get_output("TFLite_Detection_PostProcess:2");
-    println!("Scores: {:?}", scores);
     // 3 Number of detections: Integer value of N
-    let number_of_detections: Vec<u8> = session.get_output("TFLite_Detection_PostProcess:3");
-    let num = u32::from_ne_bytes(number_of_detections[0..4].try_into().unwrap());
-    println!("Number of detections: {}", num);
+    let _number_of_detections: Vec<u8> = session.get_output("TFLite_Detection_PostProcess:3");
+    for i in 0..locations.len() / 4 {
+        let class = classes[i];
+        let class_name = &class_names[class as usize];
+        let score = scores[i];
+        if score < 0.5 {
+            continue;
+        }
+        let image_size = 300;
+        let left = (image_size as f32 * locations[i * 4]) as u32;
+        let top = (image_size as f32 * locations[i * 4 + 1]) as u32;
+        let right = (image_size as f32 * locations[i * 4 + 2]) as u32;
+        let bottom = (image_size as f32 * locations[i * 4 + 3]) as u32;
+        rectangle(img, top, left, bottom, right);
+    }
 
-    let img = imwrite("output.jpg", img);
+    imwrite("output.jpg", img);
 
     println!("done");
 }

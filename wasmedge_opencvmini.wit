@@ -10,4 +10,4 @@ waitkey: func(delay: u32) -> unit
 blur: func(m: mat-key, kernel-width: u32, kernel-height: u32) -> mat-key
 normalize: func(m: mat-key) -> mat-key
 bilinear-sampling: func(m: mat-key, w: u32, h: u32) -> mat-key
-rectangle: func(m: mat-key, top: u32, left: u32, bottom: u32, right: u32) -> mat-key
+rectangle: func(m: mat-key, top: u32, left: u32, bottom: u32, right: u32) -> unit
