@@ -15,10 +15,8 @@ fn main() {
     let mut buf: Vec<u8> = vec![];
     buf.resize(270000, 0);
 
-    // 270000 is from: 300 height * 300 width
-    // and * 3 rgb?
-
     let img = imdecode(&image);
+    let img = normalize(img);
     let img = bilinear_sampling(img, 300, 300);
 
     // encode back to instance's buffer
@@ -45,12 +43,13 @@ fn main() {
     // 3 Number of detections: Integer value of N
     let _number_of_detections: Vec<u8> = session.get_output("TFLite_Detection_PostProcess:3");
     for i in 0..locations.len() / 4 {
-        let class = classes[i];
-        let class_name = &class_names[class as usize];
         let score = scores[i];
         if score < 0.5 {
             continue;
         }
+        let class = classes[i];
+        let class_name = &class_names[class as usize];
+        println!("detect a {}", class_name);
         let image_size = 300;
         let left = (image_size as f32 * locations[i * 4]) as u32;
         let top = (image_size as f32 * locations[i * 4 + 1]) as u32;
