@@ -46,6 +46,68 @@ pub fn cvt_color(m: MatKey) -> MatKey {
     unsafe { generated::cvt_color(m) }
 }
 
-pub fn rectangle(m: MatKey, top: u32, left: u32, bottom: u32, right: u32) {
-    unsafe { generated::rectangle(m, top, left, bottom, right) }
+pub enum Color {
+    RGB(f64, f64, f64),
+}
+
+pub struct RectangleOption {
+    thickness: i32,
+    line_type: i32,
+    shift: i32,
+}
+impl Default for RectangleOption {
+    fn default() -> Self {
+        Self {
+            thickness: 1,
+            line_type: 8,
+            shift: 0,
+        }
+    }
+}
+impl RectangleOption {
+    pub fn thickness(self, thickness: i32) -> Self {
+        RectangleOption {
+            thickness: thickness,
+            ..self
+        }
+    }
+    pub fn line_type(self, line_type: i32) -> Self {
+        RectangleOption {
+            line_type: line_type,
+            ..self
+        }
+    }
+    pub fn shift(self, shift: i32) -> Self {
+        RectangleOption {
+            shift: shift,
+            ..self
+        }
+    }
+}
+
+pub fn rectangle(
+    m: MatKey,
+    top: u32,
+    left: u32,
+    bottom: u32,
+    right: u32,
+    color: Color,
+    opts: RectangleOption,
+) {
+    let Color::RGB(r, g, b) = color;
+    unsafe {
+        generated::rectangle(
+            m,
+            top,
+            left,
+            bottom,
+            right,
+            r,
+            g,
+            b,
+            opts.thickness,
+            opts.line_type,
+            opts.shift,
+        )
+    }
 }

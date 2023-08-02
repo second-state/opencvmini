@@ -12,14 +12,13 @@ fn main() {
 
     println!("start");
 
-    let mut buf: Vec<u8> = vec![];
-    buf.resize(270000, 0);
-
     let img = imdecode(&image);
-    let img = normalize(img);
+    // let img = normalize(img);
     let img = bilinear_sampling(img, 300, 300);
 
     // encode back to instance's buffer
+    let mut buf: Vec<u8> = vec![];
+    buf.resize(270000, 0);
     imencode(".jpg", img, &buf);
 
     println!("going to add input");
@@ -55,7 +54,15 @@ fn main() {
         let top = (image_size as f32 * locations[i * 4 + 1]) as u32;
         let right = (image_size as f32 * locations[i * 4 + 2]) as u32;
         let bottom = (image_size as f32 * locations[i * 4 + 3]) as u32;
-        rectangle(img, top, left, bottom, right);
+        rectangle(
+            img,
+            top,
+            left,
+            bottom,
+            right,
+            Color::RGB(0., 255., 0.),
+            RectangleOption::default().thickness(2),
+        );
     }
 
     imwrite("output.jpg", img);
