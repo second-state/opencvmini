@@ -13,8 +13,8 @@ fn main() {
     println!("start");
 
     let img = imdecode(&image);
-    // let img = normalize(img);
     let img = bilinear_sampling(img, 300, 300);
+    let img = cvt_color(img, ColorConversionCodes::COLOR_RGB2XYZ, 3);
 
     // encode back to instance's buffer
     let mut buf: Vec<u8> = vec![];
