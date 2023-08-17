@@ -1,9 +1,7 @@
-mod generated {
-    #![allow(non_camel_case_types)]
-    include!(concat!(env!("OUT_DIR"), "/generated.rs"));
-}
+#![allow(non_camel_case_types)]
+mod generated;
 
-type MatKey = generated::mat_key;
+pub type MatKey = generated::mat_key;
 
 pub fn imdecode(buf: &[u8]) -> MatKey {
     unsafe { generated::imdecode(buf.as_ptr(), buf.len()) }
@@ -13,7 +11,7 @@ pub fn imdecode(buf: &[u8]) -> MatKey {
 /// ```rust
 /// fn main() {
 ///   let buf = [0u8; 100];
-///   imencode(".jpg", 0, &buf);
+///   opencvmini::imencode(".jpg", 0, &buf);
 /// }
 /// ```
 pub fn imencode(ext: &str, m: MatKey, buf: &[u8]) {
