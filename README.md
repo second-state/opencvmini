@@ -31,3 +31,5 @@ cmake -DCMAKE_BUILD_TYPE=Release -DWASMEDGE_BUILD_PLUGINS=ON \
 ninja
 ninja install # might need `sudo`
 ```
+
+You also need command-line tool [`witc`](https://github.com/second-state/witc) to generate code from WIT format. 
