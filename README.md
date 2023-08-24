@@ -32,4 +32,4 @@ ninja
 ninja install # might need `sudo`
 ```
 
-You also need command-line tool [`witc`](https://github.com/second-state/witc) to generate code from WIT format. 
+You also need command-line tool `witc` to generate code from WIT format, please refer to [installation section](https://github.com/second-state/witc#installation) to get it.
