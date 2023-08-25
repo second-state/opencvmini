@@ -41,7 +41,7 @@ fn main() {
 
         match info.os_type() {
             Type::Ubuntu | Type::Macos => {
-                let _ = Command::new("wget")
+                Command::new("wget")
                     .arg(format!(
                         "https://github.com/second-state/witc/releases/download/v0.4/{}",
                         exe
@@ -50,21 +50,20 @@ fn main() {
                     .expect("Failed to get executable");
             }
             Type::Windows => {
-                let _ = Command::new("Invoke-WebRequest")
-                    .arg("-URI")
-                    .arg(format!(
+                let cmd = format!(
+                    "Invoke-WebRequest -URI {} -OutFile {}",
+                    format!(
                         "https://github.com/second-state/witc/releases/download/v0.4/{}",
                         exe
-                    ))
-                    .arg("-OutFile")
-                    .arg(exe)
-                    .output()
-                    .expect("Failed to get executable");
+                    ),
+                    exe
+                );
+                powershell_script::run(&cmd).expect("Failed to get executable");
             }
             _ => panic!("Unsupported OS type"),
         };
 
-        let _ = Command::new("chmod")
+        Command::new("chmod")
             .arg("+x")
             .arg(exe)
             .output()
