@@ -39,19 +39,35 @@ fn main() {
             )
         );
 
-        let _ = Command::new("wget")
-            .arg(format!(
-                "https://github.com/second-state/witc/releases/download/v0.4/{}",
-                exe
-            ))
-            .output()
-            .expect("Failed to get script");
+        match info.os_type() {
+            Type::Ubuntu | Type::Macos => {
+                Command::new("wget")
+                    .arg(format!(
+                        "https://github.com/second-state/witc/releases/download/v0.4/{}",
+                        exe
+                    ))
+                    .output()
+                    .expect("Failed to get executable");
+            }
+            Type::Windows => {
+                let cmd = format!(
+                    "Invoke-WebRequest -URI {} -OutFile {}",
+                    format!(
+                        "https://github.com/second-state/witc/releases/download/v0.4/{}",
+                        exe
+                    ),
+                    exe
+                );
+                powershell_script::run(&cmd).expect("Failed to get executable");
+            }
+            _ => panic!("Unsupported OS type"),
+        };
 
-        let _ = Command::new("chmod")
+        Command::new("chmod")
             .arg("+x")
             .arg(exe)
             .output()
-            .expect("Failed to get script");
+            .expect("Failed to change mode for downloaded executable");
 
         format!("./{}", exe)
     } else {
