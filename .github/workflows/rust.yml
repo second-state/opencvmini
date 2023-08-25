@@ -8,7 +8,7 @@ on:
       - "**.toml"
       - "**.wit"
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
       - "**.rs"
       - "**.yml"
@@ -22,14 +22,13 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
-      with:
-        default: true
-        toolchain: nightly
-        target: wasm32-wasi
-    - name: Build
-      run: cargo build --target wasm32-wasi --verbose
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: nightly
+          targets: wasm32-wasi
+      - name: Build
+        run: cargo build --target wasm32-wasi --verbose
