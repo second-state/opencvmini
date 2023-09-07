@@ -1,0 +1,21 @@
+[package]
+name = "plugin-function-tests"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "cvt_color"
+path = "./src/cvt_color.rs"
+
+[[bin]]
+name = "resize"
+path = "./src/resize.rs"
+
+[[bin]]
+name = "normalize"
+path = "./src/normalize.rs"
+
+[dependencies]
+opencvmini = { path = "../.." }
