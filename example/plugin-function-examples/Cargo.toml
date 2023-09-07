@@ -1,5 +1,5 @@
 [package]
-name = "plugin-function-tests"
+name = "plugin-function-examples"
 version = "0.1.0"
 edition = "2021"
 
