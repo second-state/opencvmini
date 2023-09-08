@@ -4,7 +4,7 @@ use opencvmini::{cvt_color, imdecode, imencode, ColorConversionCodes};
 
 fn main() {
     let image = fs::read("./asset/colour-wheel.jpg").expect("failed to open image");
-    // let image = fs::read("./asset/color-wheel-additive.jpg").expect("failed to open image");
+
     let bytes_len = image.len();
 
     let img = imdecode(&image);
