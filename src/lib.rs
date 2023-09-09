@@ -3,6 +3,10 @@ mod generated {
     include!(concat!(env!("OUT_DIR"), "/generated.rs"));
 }
 
+include!("color_conversion.rs");
+include!("interpolation.rs");
+include!("normalization.rs");
+
 type MatKey = generated::mat_key;
 
 pub fn imdecode(buf: &[u8]) -> MatKey {
@@ -36,16 +40,21 @@ pub fn waitkey(delay: u32) {
 pub fn blur(m: MatKey, kernel_width: u32, kernel_height: u32) -> MatKey {
     unsafe { generated::blur(m, kernel_width, kernel_height) }
 }
-pub fn normalize(m: MatKey) -> MatKey {
-    unsafe { generated::normalize(m) }
-}
+
 pub fn bilinear_sampling(m: MatKey, w: u32, h: u32) -> MatKey {
     unsafe { generated::bilinear_sampling(m, w, h) }
 }
 
-include!("color_conversion.rs");
 pub fn cvt_color(m: MatKey, code: ColorConversionCodes, dest_channel_n: i32) -> MatKey {
     unsafe { generated::cvt_color(m, code as i32, dest_channel_n) }
+}
+
+pub fn resize(m: MatKey, w: u32, h: u32, interpolation_flag: InterpolationFlags) -> MatKey {
+    unsafe { generated::resize(m, w, h, interpolation_flag as u32) }
+}
+
+pub fn normalize(m: MatKey, alpha: u32, beta: u32, normalization: NormTypes) -> MatKey {
+    unsafe { generated::normalize(m, alpha, beta, normalization as u32) }
 }
 
 pub enum Color {

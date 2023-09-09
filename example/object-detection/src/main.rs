@@ -4,6 +4,8 @@ use wasmedge_tensorflow_interface::*;
 
 fn main() {
     let image = fs::read("asset/image_1_thumb.jpg").expect("failed to open image");
+    
+    println!("Bytes Length {}",image.len());
 
     let mod_buf =
         fs::read("model/ssd_mobilenet_v1_1_metadata_1.tflite").expect("failed to open model");
