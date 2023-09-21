@@ -1,6 +1,6 @@
 use std::fs;
 
-use opencvmini::{imdecode, imencode, imwrite, normalize, NormTypes};
+use opencvmini::{imdecode, imencode, imwrite, normalize, DataType, NormTypes};
 
 fn main() {
     let image = fs::read("./asset/colour-wheel.jpg").expect("failed to open image");
@@ -8,7 +8,14 @@ fn main() {
 
     let img = imdecode(&image);
 
-    let img = normalize(img, 0, 255, NormTypes::NORM_MINMAX);
+    let img = normalize(
+        img,
+        0,
+        255,
+        NormTypes::NORM_MINMAX,
+        DataType::InputMat,
+        None,
+    );
 
     let mut out_buf: Vec<u8> = Vec::new();
 
@@ -17,12 +24,11 @@ fn main() {
     // So to make sure we dont cut our image off, we need to allocate a larger buffer.
     out_buf.resize(bytes_len * 2, 0);
     imencode(".jpg", img, &out_buf);
-    // This could lead to writing more bytes out than needed
-
     if let Err(e) = fs::write("output.jpg", out_buf) {
         eprintln!("Error writing image out {}", e);
     } else {
         println!("Written image out")
+        // This could lead to writing more bytes out than needed
     };
 
     // Alternatively we can use imwrite to write directly, the correct number of bytes to disk

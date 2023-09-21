@@ -53,8 +53,20 @@ pub fn resize(m: MatKey, w: u32, h: u32, interpolation_flag: InterpolationFlags)
     unsafe { generated::resize(m, w, h, interpolation_flag as u32) }
 }
 
-pub fn normalize(m: MatKey, alpha: u32, beta: u32, normalization: NormTypes) -> MatKey {
-    unsafe { generated::normalize(m, alpha, beta, normalization as u32) }
+pub fn normalize(
+    m: MatKey,
+    alpha: u32,
+    beta: u32,
+    normalization: NormTypes,
+    dtype: DataType,
+    mask_m_opt: Option<MatKey>,
+) -> MatKey {
+    let mask_m = match mask_m_opt {
+        Some(mask) => mask,
+        None => imdecode(&[]),
+    };
+
+    unsafe { generated::normalize(m, alpha, beta, normalization as u32, dtype as u32, mask_m) }
 }
 
 pub enum Color {

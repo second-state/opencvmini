@@ -11,6 +11,6 @@ blur: func(m: mat-key, kernel-width: u32, kernel-height: u32) -> mat-key
 bilinear-sampling: func(m: mat-key, w: u32, h: u32) -> mat-key
 cvt-color: func(m: mat-key, code: s32, dest-channel: s32) -> mat-key
 resize: func(m: mat-key, w: u32, h: u32, interpolation: u32) -> mat-key
-normalize: func(m: mat-key, alpha: u32, beta: u32, norm-type: u32) -> mat-key
+normalize: func(m: mat-key, alpha: u32, beta: u32, norm-type: u32, dtype: u32, mask: u32) -> mat-key
 
 rectangle: func(m: mat-key, top: u32, left: u32, bottom: u32, right: u32, R: f64, G: f64, B: f64, thickness: s32, lineType: s32, shift: s32) -> unit
