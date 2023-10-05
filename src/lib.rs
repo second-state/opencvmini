@@ -52,9 +52,20 @@ pub fn cvt_color(m: MatKey, code: ColorConversionCodes, dest_channel_n: i32) -> 
 pub fn resize(m: MatKey, w: u32, h: u32, interpolation_flag: InterpolationFlags) -> MatKey {
     unsafe { generated::resize(m, w, h, interpolation_flag as u32) }
 }
+pub fn no_array() -> MatKey {
+    unsafe { generated::no_array() }
+}
 
-pub fn normalize(m: MatKey, alpha: u32, beta: u32, normalization: NormTypes) -> MatKey {
-    unsafe { generated::normalize(m, alpha, beta, normalization as u32) }
+pub fn normalize(
+    m: MatKey,
+    alpha: u32,
+    beta: u32,
+    normalization: NormTypes,
+    dtype: DataType,
+    mask_m_opt: Option<MatKey>,
+) -> MatKey {
+    let mask_m = mask_m_opt.unwrap_or(no_array());
+    unsafe { generated::normalize(m, alpha, beta, normalization as u32, dtype as u32, mask_m) }
 }
 
 pub enum Color {
